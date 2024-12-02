@@ -76,15 +76,16 @@ WSGI_APPLICATION = 'lab_ne.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# mysql://root:OwNpujgIiMfdkdTaCOuybGIqBxUtEMgj@junction.proxy.rlwy.net:33056/railway
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lab_ne',
+        'NAME': 'railway',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'PASSWORD': 'OwNpujgIiMfdkdTaCOuybGIqBxUtEMgj',
+        'HOST': 'junction.proxy.rlwy.net',
+        'PORT': '33056',
     }
 }
 
