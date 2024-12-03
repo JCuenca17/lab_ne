@@ -87,14 +87,21 @@ class MaestroEquipo(models.Model):
         max_length=200,
         verbose_name="Ubicación"
     )
-    estado_registro = models.BooleanField(
-        default=True,
+    estado_registro = models.CharField(
+        max_length=1,
+        choices=[
+            ('A', 'Activo'),
+            ('I', 'Inactivo'),
+            ('*', 'Eliminado')
+        ],
+        default='A',
         verbose_name="Estado de Registro"
     )
 
     class Meta:
         verbose_name = "Maestro de Equipo"
         verbose_name_plural = "Maestros de Equipos"
+        ordering = ['nombre']
 
     def __str__(self):
         return f"{self.nombre} ({self.id})"

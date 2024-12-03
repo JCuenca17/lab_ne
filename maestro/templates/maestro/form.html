@@ -3,8 +3,12 @@
   {% for campo in formulario %}
     <div class="mb-3">
       <label for="" class="form-label">{{ campo.label }}</label>
-      {{ campo }}
       {% comment %} <input type="{{ campo.field.widget.input_type }}" class="form-control" name="{{ campo.name }}" id="" aria-describedby="helpId" placeholder="{{ campo.label }}" value="{{ campo.value|default:'' }}" /> {% endcomment %}
+      {% if campo.name == 'estado_registro' and not formulario.instance.pk %}
+        <input type="text" class="form-control" value="{{ campo.value }}" readonly />
+      {% else %}
+        {{ campo }}
+      {% endif %}
     </div>
     <div class="col-12 help-text">{{ campo.errors }}</div>
   {% endfor %}
