@@ -5,12 +5,28 @@
 {% endblock %}
 
 {% block content %}
-  <div class="row align-items-md-stretch">
-    <div class="col-md-6">
-      <div class="h-100 p-5 text-white bg-primary border rounded-3">
-        <h2>Bienvenidos</h2>
-        <p>Emezar a ingresar</p>
-        <button class="btn btn-outline-primary" type="button">Empezar</button>
+  <div class="container">
+    <div class="row justify-content-center my-5">
+      <div class="col-12 col-md-6">
+        <div class="card text-center h-100 p-4 bg-primary text-white border-0 rounded-3">
+          <h2>Bienvenidos</h2>
+          <p>Comienza a ingresar tus datos y explorar las funcionalidades.</p>
+          <button class="btn btn-outline-light" type="button">Empezar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección adicional si se quiere incluir información adicional -->
+    <div class="row justify-content-center mt-4">
+      <div class="col-12 col-md-8">
+        <div class="alert alert-info text-center" role="alert">
+          <h4 class="alert-heading">Funcionalidades disponibles:</h4>
+          <ul>
+            <li>Adición, Modificación, Eliminación de registros</li>
+            {% comment %} <li>Búsqueda de registros por nombre o código</li> {% endcomment %}
+            <li>Activar o desactivar registros</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
