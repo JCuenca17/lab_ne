@@ -1,0 +1,39 @@
+@media (max-width: 30em) {
+    .tb {
+        width: 100%;
+        font-size: .9em;
+    }
+
+    .td, .th{
+        padding: 5px 10px;
+        border: 1px solid lightgrey;
+    }
+
+    .tb .tr {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid lightgrey;
+        padding: 1em;
+        margin-bottom: 1em;
+    }
+
+    .tb .td[data-titulo]{
+        display: flex;
+    }
+
+    .tb .td,
+    .tb .th {
+        border: none;
+    }
+
+    .tb td[data-titulo]::before{
+        content: attr(data-titulo);
+        width: 90px;
+        color: silver;
+        font-weight: bold;
+    }
+
+    .tb .the {
+        display: none;
+    }
+}

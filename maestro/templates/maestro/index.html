@@ -13,33 +13,33 @@
       <h4 class="card-title">Maestro de Equipos</h4>
 
       <div class="table">
-        <table class="table table-primary">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Taller de Mantenimiento</th>
-              <th scope="col">Tipo de Equipo</th>
-              <th scope="col">Ubicación</th>
-              <th scope="col">Estado de Registro</th>
-              <th scope="col">Acciones</th>
+        <table class="tb table">
+          <thead class="the table-primary">
+            <tr class="tr">
+              <th scope="col" class="th" data-titulo="id">ID</th>
+              <th scope="col" class="th" data-titulo="nombre">Nombre</th>
+              <th scope="col" class="th" data-titulo="taller">Taller de Mantenimiento</th>
+              <th scope="col" class="th" data-titulo="tipo">Tipo de Equipo</th>
+              <th scope="col" class="th" data-titulo="ubicacion">Ubicación</th>
+              <th scope="col" class="th" data-titulo="estado">Estado de Registro</th>
+              <th scope="col" class="th" data-titulo="acciones">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {% for maestro in maestros %}
-            <tr>
-              <td>{{ maestro.id }}</td>
-              <td>{{ maestro.nombre }}</td>
-              <td>{{ maestro.taller_mantenimiento.nombre }}</td>
-              <td>{{ maestro.tipo_equipo.nombre }}</td>
-              <td>{{ maestro.ubicacion }}</td>
-              <td>{{ maestro.estado_registro }}</td>
-              <td>
-                <a name="" id="" class="btn btn-info" href="{% url 'editar' maestro.id %}" role="button">Editar</a>
-                | 
-                <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' maestro.id %}" role="button">Borrar</a>
-              </td>
-            </tr>
+              <tr class="tr">
+                <td class="td" data-titulo="id">{{ maestro.id }}</td>
+                <td class="td" data-titulo="nombre">{{ maestro.nombre }}</td>
+                <td class="td" data-titulo="taller">{{ maestro.taller_mantenimiento.nombre }}</td>
+                <td class="td" data-titulo="tipo">{{ maestro.tipo_equipo.nombre }}</td>
+                <td class="td" data-titulo="ubicacion">{{ maestro.ubicacion }}</td>
+                <td class="td" data-titulo="estado">{{ maestro.estado_registro }}</td>
+                <td class="td" data-titulo="acciones">
+                  <a name="" id="" class="btn btn-info" href="{% url 'editar' maestro.id %}" role="button">Editar</a>
+                  <span style="margin-left: 10px;"></span>
+                  <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' maestro.id %}" role="button">Borrar</a>
+                </td>
+              </tr>
             {% endfor %}
           </tbody>
         </table>
