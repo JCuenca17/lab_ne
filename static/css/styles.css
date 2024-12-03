@@ -4,7 +4,8 @@
         font-size: .9em;
     }
 
-    .td, .th{
+    .td,
+    .th {
         padding: 5px 10px;
         border: 1px solid lightgrey;
     }
@@ -17,7 +18,7 @@
         margin-bottom: 1em;
     }
 
-    .tb .td[data-titulo]{
+    .tb .td[data-titulo] {
         display: flex;
     }
 
@@ -26,7 +27,7 @@
         border: none;
     }
 
-    .tb td[data-titulo]::before{
+    .tb td[data-titulo]::before {
         content: attr(data-titulo);
         width: 90px;
         color: silver;
@@ -35,5 +36,38 @@
 
     .tb .the {
         display: none;
+    }
+
+    /* Ocultar la columna 'Acciones' en pantallas pequeñas */
+    @media (max-width: 30em) {
+        .tb td[data-titulo="acciones"]::before {
+            display: none;
+            /* No mostrar la palabra "Acciones" en dispositivos pequeños */
+        }
+
+        .tb .th[data-titulo="acciones"] {
+            display: none;
+            /* Ocultar el encabezado 'Acciones' */
+        }
+
+        /* Mejoras para las acciones en móviles */
+        .tb .td[data-titulo="acciones"] {
+            display: flex;
+            flex-direction: column;
+            /* Apilar las acciones */
+            align-items: flex-start;
+            /* Alinear las acciones al principio */
+        }
+
+        .tb .td[data-titulo="acciones"] a {
+            margin-bottom: 5px;
+            /* Separar las acciones */
+            width: 100%;
+            /* Hacer que los botones ocupen el ancho completo */
+            text-align: center;
+            /* Centrar el texto de los botones */
+            margin-top: 10px;
+            /* Espacio antes de los botones */
+        }
     }
 }

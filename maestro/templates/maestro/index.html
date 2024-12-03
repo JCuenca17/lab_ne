@@ -12,6 +12,12 @@
     <div class="card-body">
       <h4 class="card-title">Maestro de Equipos</h4>
 
+      <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'maestro' %}?filtro=activos" class="btn btn-success me-2 {% if filtro == 'activos' %}active{% endif %}">Mostrar Activos</a>
+        <a href="{% url 'maestro' %}?filtro=inactivos" class="btn btn-warning me-2 {% if filtro == 'inactivos' %}active{% endif %}">Mostrar Inactivos</a>
+        <a href="{% url 'maestro' %}?filtro=eliminados" class="btn btn-danger {% if filtro == 'eliminados' %}active{% endif %}">Mostrar Eliminados</a>
+      </div>
+
       <div class="table">
         <table class="tb table">
           <thead class="the table-primary">
@@ -35,9 +41,20 @@
                 <td class="td" data-titulo="ubicacion">{{ maestro.ubicacion }}</td>
                 <td class="td" data-titulo="estado">{{ maestro.estado_registro }}</td>
                 <td class="td" data-titulo="acciones">
-                  <a name="" id="" class="btn btn-info" href="{% url 'editar' maestro.id %}" role="button">Editar</a>
-                  <span style="margin-left: 10px;"></span>
-                  <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' maestro.id %}" role="button">Borrar</a>
+                  {% if filtro == 'activos' %}
+                    <a name="" id="" class="btn btn-warning" href="{% url 'desactivar' maestro.id %}" role="button">Desactivar</a>
+                    <span style="margin-left: 10px;"></span>
+                    <a name="" id="" class="btn btn-info" href="{% url 'editar' maestro.id %}" role="button">Editar</a>
+                    <span style="margin-left: 10px;"></span>
+                    <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' maestro.id %}" role="button">Eliminar</a>
+                  {% elif filtro == 'inactivos' %}
+                    <a name="" id="" class="btn btn-success" href="{% url 'activar' maestro.id %}" role="button">Activar</a>
+                    <span style="margin-left: 10px;"></span>
+                    <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' maestro.id %}" role="button">Eliminar</a>
+                  {% else %}
+                    <!-- Eliminados -->
+                    <span class="text-muted">Sin acciones disponibles</span>
+                  {% endif %}
                 </td>
               </tr>
             {% endfor %}
