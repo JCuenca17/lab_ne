@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-=!t0g$r&svgqx=h%x4ah!_y+#2z_nqdw0!m+(vdklel52oy9br
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.38', 'labne-production.up.railway.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.ngrok-free.app']
 
 
 # Application definition
@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'maestro',
     'pwa',
-    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -76,16 +75,15 @@ WSGI_APPLICATION = 'lab_ne.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-# mysql://root:OwNpujgIiMfdkdTaCOuybGIqBxUtEMgj@junction.proxy.rlwy.net:33056/railway
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',
+        'NAME': 'lab_ne',
         'USER': 'root',
-        'PASSWORD': 'OwNpujgIiMfdkdTaCOuybGIqBxUtEMgj',
-        'HOST': 'junction.proxy.rlwy.net',
-        'PORT': '33056',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -126,7 +124,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -135,26 +132,56 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # PWA
 
+STATIC_URL = '/static/'  # Esto se mantiene igual
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Para el entorno de producción
 
 PWA_APP_NAME = 'maestro'
-PWA_APP_DESCRIPTION = 'Aplicación de maestros'
+PWA_APP_DESCRIPTION = 'Aplicacion de maestros'
 PWA_APP_THEME_COLOR = '#3477F5'
 PWA_APP_BACKGROUND_COLOR = '#6699F7'
+PWA_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
 PWA_APP_ICONS = [
     {
-        'src': 'static/img/icon.png',
-        'sizes': '512x512'
+        'src': '/static/img/icon.png',
+        'sizes': '160x160'
     }
 ]
+
 PWA_APP_ICONS_APPLE = [
     {
-        'src': 'static/img/icon.png',
-        'sizes': '512x512'
+        'src': '/static/img/icon.png',
+        'sizes': '160x160'
+    }
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'en-US'
+PWA_APP_SHORTCUTS = [
+    {
+        'name': 'Shortcut',
+        'url': '/target',
+        'description': 'Shortcut to a page in my application'
+    }
+]
+PWA_APP_SCREENSHOTS = [
+    {
+        "src": "/static/img/screenshot-desktop.png",
+        "sizes": "800x600",
+        "type": "image/png",
+        "form_factor": "wide"
+    },
+    {
+        "src": "/static/img/screenshot-mobile.png",
+        "sizes": "640x960",
+        "type": "image/png",
     }
 ]
 
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'serviceworker.js')
 
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'serviceworker.js')

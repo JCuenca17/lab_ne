@@ -4,6 +4,9 @@ var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
     '/offline/',
     '/static/img/icon.png',
+    '/static/img/icon2.png',
+    '/static/img/screenshot-desktop.png',
+    '/static/img/screenshot-mobile.png',
 ];
 
 // Cache on install
@@ -30,7 +33,7 @@ self.addEventListener('activate', event => {
         })
     );
 });
-/* 
+
 // Serve from Cache
 self.addEventListener("fetch", event => {
     event.respondWith(
@@ -39,12 +42,11 @@ self.addEventListener("fetch", event => {
                 return response || fetch(event.request);
             })
             .catch(() => {
-                return caches.match('/offline/');
+                return caches.match('offline');
             })
     )
 });
- */
-
+/* 
 self.addEventListener('fetch', function (event) {
     event.respondWith(
         fetch(event.request).then(function (result) {
@@ -56,4 +58,4 @@ self.addEventListener('fetch', function (event) {
             return caches.match(event.request);
         })
     )
-});
+}); */
