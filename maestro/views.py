@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import MaestroEquipo
 from .forms import MaestroForm
+from django.db.models import Q
 # Create your views here.
 
 
@@ -13,23 +14,28 @@ def nosotros(request):
     return render(request, 'pages/nosotros.html')
 
 
-""" def maestros(request):
-    maestros = MaestroEquipo.objects.all()
-    #maestros = MaestroEquipo.objects.filter(estado_registro='A')
-    return render(request, 'maestro/index.html', {'maestros': maestros}) """
-
-
 def maestros(request):
-    # Por defecto, mostrar activos
-    filtro = request.GET.get('filtro', 'activos')
-    if filtro == 'eliminados':
-        maestros = MaestroEquipo.objects.filter(estado_registro='*')
-    elif filtro == 'inactivos':
-        maestros = MaestroEquipo.objects.filter(estado_registro='I')
-    else:  # Por defecto, mostrar activos
-        maestros = MaestroEquipo.objects.filter(estado_registro='A')
+    query = request.GET.get('search', '')  # Obtiene la consulta de búsqueda
+    filtro = ''  # Inicializa filtro con un valor predeterminado
 
-    return render(request, 'maestro/index.html', {'maestros': maestros, 'filtro': filtro})
+    if query:
+        maestros = MaestroEquipo.objects.filter(
+            Q(id__icontains=query) |
+            Q(nombre__icontains=query) |
+            Q(ubicacion__icontains=query)
+        )
+    else:
+        # Obtiene el filtro de los parámetros de la URL
+        filtro = request.GET.get('filtro', 'activos')
+        if filtro == 'eliminados':
+            maestros = MaestroEquipo.objects.filter(estado_registro='*')
+        elif filtro == 'inactivos':
+            maestros = MaestroEquipo.objects.filter(estado_registro='I')
+        else:  # Por defecto, mostrar activos
+            maestros = MaestroEquipo.objects.filter(estado_registro='A')
+
+    # Renderiza la plantilla con los datos necesarios
+    return render(request, 'maestro/index.html', {'maestros': maestros, 'filtro': filtro, 'query': query})
 
 
 def crear(request):
