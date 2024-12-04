@@ -6,16 +6,16 @@
 
 {% block content %}
   <div class="card">
-    <div class="card-header">
+    <div class="d-flex card-header">
       <a name="" id="" class="btn btn-primary" href="{% url 'crear' %}" role="button">Agregar</a>
     </div>
     <div class="card-body">
       <h4 class="card-title">Maestro de Equipos</h4>
 
-      <div class="d-flex justify-content-end mb-3">
-        <a href="{% url 'maestro' %}?filtro=activos" class="btn btn-success me-2 {% if filtro == 'activos' %}active{% endif %}">Mostrar Activos</a>
-        <a href="{% url 'maestro' %}?filtro=inactivos" class="btn btn-warning me-2 {% if filtro == 'inactivos' %}active{% endif %}">Mostrar Inactivos</a>
-        <a href="{% url 'maestro' %}?filtro=eliminados" class="btn btn-danger {% if filtro == 'eliminados' %}active{% endif %}">Mostrar Eliminados</a>
+      <div class="d-flex justify-content-center mb-3">
+        <a href="{% url 'maestro' %}?filtro=activos" class="btn btn-success me-2 {% if filtro == 'activos' %}active{% endif %}">Activados</a>
+        <a href="{% url 'maestro' %}?filtro=inactivos" class="btn btn-warning me-2 {% if filtro == 'inactivos' %}active{% endif %}">Desactivados</a>
+        <a href="{% url 'maestro' %}?filtro=eliminados" class="btn btn-danger {% if filtro == 'eliminados' %}active{% endif %}">Eliminados</a>
       </div>
 
       <div class="table">
