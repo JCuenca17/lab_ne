@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+  Detalle del Equipo
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      <h4>Detalles de {{ maestro.nombre }}</h4>
+    </div>
+    <div class="card-body">
+      <ul class="list-group mb-3">
+        <li class="list-group-item">
+          <strong>ID:</strong> {{ maestro.id }}
+        </li>
+        <li class="list-group-item">
+          <strong>Nombre:</strong> {{ maestro.nombre }}
+        </li>
+        <li class="list-group-item">
+          <strong>Taller de Mantenimiento:</strong> {{ maestro.taller_mantenimiento.nombre }}
+        </li>
+        <li class="list-group-item">
+          <strong>Tipo de Equipo:</strong> {{ maestro.tipo_equipo.nombre }}
+        </li>
+        <li class="list-group-item">
+          <strong>Ubicación:</strong> {{ maestro.ubicacion }}
+        </li>
+        <li class="list-group-item">
+          <strong>Estado:</strong>
+          {% if maestro.estado_registro == 'A' %}
+            Activo
+          {% elif maestro.estado_registro == 'I' %}
+            Inactivo
+          {% elif maestro.estado_registro == '*' %}
+            Eliminado
+          {% endif %}
+        </li>
+      </ul>
+
+      <!-- Botones centrados -->
+      <div class="d-flex justify-content-center mt-3">
+        {% if maestro.estado_registro != '*' %}
+          {% comment %} {% if maestro.estado_registro == 'A' %}
+            <a href="{% url 'desactivar' maestro.id %}" class="btn btn-warning me-2">Desactivar</a>
+          {% elif maestro.estado_registro == 'I' %}
+            <a href="{% url 'activar' maestro.id %}" class="btn btn-success me-2">Activar</a>
+          {% endif %} {% endcomment %}
+          <a href="{% url 'editar' maestro.id %}" class="btn btn-info me-2">Editar</a>
+          <a href="{% url 'eliminar' maestro.id %}" class="btn btn-danger me-2">Eliminar</a>
+        {% endif %}
+        <a href="{% url 'maestro' %}" class="btn btn-secondary">Volver a la Lista</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

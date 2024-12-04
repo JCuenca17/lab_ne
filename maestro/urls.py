@@ -14,6 +14,7 @@ urlpatterns = [
     path('maestro/editar/<str:id>', views.editar, name='editar'),
     path('desactivar/<str:id>/', views.desactivar, name='desactivar'),
     path('activar/<str:id>/', views.activar, name='activar'),
+    path('detalle/<str:id>/', views.detalle, name='detalle'),
     path('login/', LoginView.as_view(template_name='pages/login.html',
          authentication_form=CustomLoginForm), name='login'),
     path('logout/', LogoutView.as_view(next_page='inicio'), name='logout'),

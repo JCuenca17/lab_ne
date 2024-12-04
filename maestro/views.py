@@ -14,6 +14,7 @@ def inicio(request):
 def nosotros(request):
     return render(request, 'pages/nosotros.html')
 
+
 @login_required(login_url='login')
 def maestros(request):
     query = request.GET.get('search', '')  # Obtiene la consulta de búsqueda
@@ -38,6 +39,7 @@ def maestros(request):
     # Renderiza la plantilla con los datos necesarios
     return render(request, 'maestro/index.html', {'maestros': maestros, 'filtro': filtro, 'query': query})
 
+
 @login_required(login_url='login')
 def crear(request):
     formulario = MaestroForm(request.POST or None)
@@ -46,6 +48,7 @@ def crear(request):
         return redirect('maestro')
     return render(request, 'maestro/crear.html', {'formulario': formulario})
 
+
 @login_required(login_url='login')
 def editar(request, id):
     maestros = MaestroEquipo.objects.get(id=id)
@@ -53,7 +56,11 @@ def editar(request, id):
     if formulario.is_valid() and request.method == 'POST':
         formulario.save()
         return redirect('maestro')
-    return render(request, 'maestro/editar.html', {'formulario': formulario})
+    return render(request, 'maestro/editar.html', {
+        'formulario': formulario,
+        'maestro': maestros
+    })
+
 
 @login_required(login_url='login')
 def eliminar(request, id):
@@ -63,6 +70,7 @@ def eliminar(request, id):
     maestros.save()
     return redirect('maestro')
 
+
 @login_required(login_url='login')
 def activar(request, id):
     maestro = MaestroEquipo.objects.get(id=id)
@@ -70,9 +78,16 @@ def activar(request, id):
     maestro.save()
     return redirect('maestro')
 
+
 @login_required(login_url='login')
 def desactivar(request, id):
     maestro = MaestroEquipo.objects.get(id=id)
     maestro.estado_registro = 'I'  # Cambiar a inactivo
     maestro.save()
     return redirect('maestro')
+
+
+@login_required(login_url='login')
+def detalle(request, id):
+    maestro = MaestroEquipo.objects.get(id=id)
+    return render(request, 'maestro/detalle.html', {'maestro': maestro})

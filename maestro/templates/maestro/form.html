@@ -3,7 +3,6 @@
   {% for campo in formulario %}
     <div class="mb-3">
       <label for="" class="form-label">{{ campo.label }}</label>
-      {% comment %} <input type="{{ campo.field.widget.input_type }}" class="form-control" name="{{ campo.name }}" id="" aria-describedby="helpId" placeholder="{{ campo.label }}" value="{{ campo.value|default:'' }}" /> {% endcomment %}
       {% if campo.name == 'estado_registro' and not formulario.instance.pk %}
         <input type="text" class="form-control" value="{{ campo.value }}" readonly />
       {% else %}
@@ -12,6 +11,16 @@
     </div>
     <div class="col-12 help-text">{{ campo.errors }}</div>
   {% endfor %}
-  <input name="" id="" class="btn btn-success" type="submit" value="Guardar" />
-  <a name="" id="" class="btn btn-primary" href="{% url 'maestro' %}" role="button">Cancelar</a>
+
+  <div class="d-flex justify-content-center mt-3">
+    <input name="" id="" class="btn btn-success me-2" type="submit" value="Guardar" />
+    <a name="" id="" class="btn btn-primary me-2" href="{% url 'maestro' %}" role="button">Cancelar</a>
+
+    <!-- Botón para activar/desactivar -->
+    {% if maestro.estado_registro == 'A' %}
+      <a href="{% url 'desactivar' maestro.id %}" class="btn btn-warning">Desactivar</a>
+    {% elif maestro.estado_registro == 'I' %}
+      <a href="{% url 'activar' maestro.id %}" class="btn btn-success">Activar</a>
+    {% endif %}
+  </div>
 </form>
