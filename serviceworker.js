@@ -4,9 +4,10 @@ var staticCacheName = "django-pwa-v" + new Date().getTime();
 var filesToCache = [
     '/offline/',
     '/static/img/icon.png',
-    '/static/img/icon2.png',
     '/static/img/screenshot-desktop.png',
     '/static/img/screenshot-mobile.png',
+    '/static/css/styles.css',
+    '/static/js/nav.js',
 ];
 
 // Cache on install
@@ -42,7 +43,7 @@ self.addEventListener("fetch", event => {
                 return response || fetch(event.request);
             })
             .catch(() => {
-                return caches.match('offline');
+                return caches.match('/offline/');
             })
     )
 });
