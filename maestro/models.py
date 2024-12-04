@@ -12,12 +12,6 @@ class TipoEquipo(models.Model):
         max_length=100,
         verbose_name="Nombre del Tipo de Equipo"
     )
-    tipo_equipo = models.CharField(  # Nuevo campo para indicar el tipo de equipo
-        max_length=20,
-        choices=[('eléctrico', 'Eléctrico'), ('mecánico', 'Mecánico'),
-                 ('mecatrónico', 'Mecatrónico')],
-        verbose_name="Tipo de Equipo"
-    )
     estado_registro = models.CharField(
         max_length=1,
         choices=[('A', 'Activo'), ('I', 'Inactivo'), ('*', 'Eliminado')],
@@ -43,12 +37,6 @@ class TallerMantenimiento(models.Model):
     nombre = models.CharField(
         max_length=100,
         verbose_name="Nombre del Taller"
-    )
-    tipo_taller = models.CharField(  # Nuevo campo para indicar el tipo de taller
-        max_length=20,
-        choices=[('eléctrico', 'Eléctrico'), ('mecánico', 'Mecánico'),
-                 ('pintura', 'Pintura'), ('automotriz', 'Automotriz')],
-        verbose_name="Tipo de Taller"
     )
     estado_registro = models.CharField(
         max_length=1,

@@ -34,7 +34,7 @@ self.addEventListener('activate', event => {
         })
     );
 });
-
+/* 
 // Serve from Cache
 self.addEventListener("fetch", event => {
     event.respondWith(
@@ -46,17 +46,19 @@ self.addEventListener("fetch", event => {
                 return caches.match('/offline/');
             })
     )
-});
-/* 
+}); */
+
 self.addEventListener('fetch', function (event) {
     event.respondWith(
-        fetch(event.request).then(function (result) {
-            return caches.open(staticCacheName).then(function (c) {
-                c.put(event.request.url, result.clone());
-                return result;
-            });
-        }).catch(function (e) {
-            return caches.match(event.request);
-        })
+        fetch(event.request)
+            .then(function (result) {
+                return caches.open(staticCacheName)
+                    .then(function (c) {
+                        c.put(event.request.url, result.clone());
+                        return result;
+                    });
+            }).catch(function (e) {
+                return caches.match(event.request);
+            })
     )
-}); */
+});
