@@ -11,7 +11,19 @@
         <div class="card text-center h-100 p-4 bg-primary text-white border-0 rounded-3">
           <h2>Bienvenidos</h2>
           <p>Comienza a ingresar tus datos y explorar las funcionalidades.</p>
-          <button class="btn btn-outline-light" type="button">Empezar</button>
+
+          {% if user.is_authenticated %}
+            <!-- Mostrar botones cuando el usuario esté logueado -->
+            <div class="mb-3">
+              <a href="{% url 'maestro' %}" class="btn btn-outline-light w-100" type="button">Tablas</a>
+            </div>
+            <div>
+              <a href="{% url 'logout' %}" class="btn btn-outline-light w-100" type="button">Cerrar Sesión</a>
+            </div>
+          {% else %}
+            <!-- Mostrar solo el botón Login cuando el usuario no esté logueado -->
+            <a href="{% url 'login' %}" class="btn btn-outline-light w-100" type="button">Iniciar Sesión</a>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -22,8 +34,8 @@
         <div class="alert alert-info text-center" role="alert">
           <h4 class="alert-heading">Funcionalidades disponibles:</h4>
           <ul>
-            <li>Adición, Modificación, Eliminación de registros</li>
-            {% comment %} <li>Búsqueda de registros por nombre o código</li> {% endcomment %}
+            <li>Creación, Modificación y Eliminación de registros</li>
+            <li>Búsqueda de registros por nombre, código o ubicación</li>
             <li>Activar o desactivar registros</li>
           </ul>
         </div>

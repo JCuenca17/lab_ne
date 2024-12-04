@@ -10,7 +10,8 @@ class MaestroForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
-        
+
         # Eliminar 'estado_registro' del formulario
         if 'estado_registro' in self.fields:
             del self.fields['estado_registro']
+
