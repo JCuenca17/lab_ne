@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import MaestroEquipo
+from .models import MaestroEquipo, TallerMantenimiento, TipoEquipo
 from .forms import MaestroForm
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -20,6 +20,10 @@ def maestros(request):
     query = request.GET.get('search', '')  # Obtiene la consulta de búsqueda
     # Obtiene todos los filtros seleccionados
     filtros = request.GET.getlist('filtro')
+    talleres_seleccionados = request.GET.getlist(
+        'taller')  # Obtener los talleres seleccionados
+    # Obtener los tipos de equipo seleccionados
+    tipos_seleccionados = request.GET.getlist('tipo')
 
     # Filtrado por búsqueda
     if query:
@@ -44,8 +48,29 @@ def maestros(request):
             # Si no hay filtros seleccionados, mostramos todos los registros
             maestros = MaestroEquipo.objects.all()
 
+        # Filtrar por talleres seleccionados si se eligieron
+        if talleres_seleccionados:
+            maestros = maestros.filter(
+                taller_mantenimiento__id__in=talleres_seleccionados)
+
+        # Filtrar por tipos de equipo seleccionados si se eligieron
+        if tipos_seleccionados:
+            maestros = maestros.filter(tipo_equipo__id__in=tipos_seleccionados)
+
+    # Obtener todos los talleres y tipos de equipo para pasarlos a la plantilla
+    talleres = TallerMantenimiento.objects.all()
+    tipos = TipoEquipo.objects.all()
+
     # Renderiza la plantilla con los datos necesarios
-    return render(request, 'maestro/index.html', {'maestros': maestros, 'filtro': filtros, 'query': query})
+    return render(request, 'maestro/index.html', {
+        'maestros': maestros,
+        'filtro': filtros,
+        'query': query,
+        'talleres': talleres,
+        'tipos': tipos,  # Pasamos los tipos de equipo
+        'talleres_seleccionados': talleres_seleccionados,
+        'tipos_seleccionados': tipos_seleccionados  # Pasamos los tipos seleccionados
+    })
 
 
 @login_required(login_url='login')

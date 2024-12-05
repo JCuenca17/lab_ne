@@ -26,7 +26,7 @@
             <!-- Contenedor para el formulario de búsqueda pegado a la derecha -->
             <div class="d-flex justify-content-end w-100">
               <form method="get" action="" class="d-flex" style="max-width: 400px; width: 100%;">
-                <input type="text" name="search" class="form-control me-2" placeholder="Buscar registros..." value="{{ request.GET.search|default:'' }}" />
+                <input type="text" name="search" class="form-control me-2" placeholder="Buscar registros..." value="{{ query|default:'' }}" />
                 <button class="btn btn-outline-secondary d-flex align-items-center" type="submit">
                   Buscar
                   <i class="bi bi-search ms-2"></i> <!-- Ícono de búsqueda (Bootstrap 5) -->
@@ -54,6 +54,25 @@
                   <input class="form-check-input" type="checkbox" name="filtro" value="eliminados" id="eliminado" {% if 'eliminados' in filtro %}checked{% endif %}>
                   <label class="form-check-label" for="eliminado">Eliminados</label>
                 </div>
+
+                <!-- Filtro por taller de mantenimiento -->
+                <h5 class="mt-3">Filtrar por Taller de Mantenimiento:</h5>
+                {% for taller in talleres %}
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="taller" value="{{ taller.id }}" id="taller_{{ taller.id }}" {% if taller.id in talleres_seleccionados %}checked{% endif %}>
+                    <label class="form-check-label" for="taller_{{ taller.id }}">{{ taller.nombre }}</label>
+                  </div>
+                {% endfor %}
+
+                <!-- Filtro por tipo de equipo -->
+                <h5 class="mt-3">Filtrar por Tipo de Equipo:</h5>
+                {% for tipo in tipos %}
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="tipo" value="{{ tipo.id }}" id="tipo_{{ tipo.id }}" {% if tipo.id in tipos_seleccionados %}checked{% endif %}>
+                    <label class="form-check-label" for="tipo_{{ tipo.id }}">{{ tipo.nombre }}</label>
+                  </div>
+                {% endfor %}
+
                 <button type="submit" class="btn btn-primary mt-3 d-flex align-items-center">
                   Aplicar Filtro
                   <i class="bi bi-check ms-2"></i> <!-- Ícono de confirmación (Bootstrap 5) -->
