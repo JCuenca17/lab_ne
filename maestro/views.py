@@ -18,8 +18,10 @@ def nosotros(request):
 @login_required(login_url='login')
 def maestros(request):
     query = request.GET.get('search', '')  # Obtiene la consulta de búsqueda
-    filtro = ''  # Inicializa filtro con un valor predeterminado
+    # Obtiene todos los filtros seleccionados
+    filtros = request.GET.getlist('filtro')
 
+    # Filtrado por búsqueda
     if query:
         maestros = MaestroEquipo.objects.filter(
             Q(id__icontains=query) |
@@ -27,17 +29,23 @@ def maestros(request):
             Q(ubicacion__icontains=query)
         )
     else:
-        # Obtiene el filtro de los parámetros de la URL
-        filtro = request.GET.get('filtro', 'activos')
-        if filtro == 'eliminados':
-            maestros = MaestroEquipo.objects.filter(estado_registro='*')
-        elif filtro == 'inactivos':
-            maestros = MaestroEquipo.objects.filter(estado_registro='I')
-        else:  # Por defecto, mostrar activos
-            maestros = MaestroEquipo.objects.filter(estado_registro='A')
+        if filtros:
+            # Inicializamos el filtro base con un Q() vacío
+            query_filtro = Q()
+            if 'activos' in filtros:
+                query_filtro |= Q(estado_registro='A')
+            if 'inactivos' in filtros:
+                query_filtro |= Q(estado_registro='I')
+            if 'eliminados' in filtros:
+                query_filtro |= Q(estado_registro='*')
+
+            maestros = MaestroEquipo.objects.filter(query_filtro)
+        else:
+            # Si no hay filtros seleccionados, mostramos todos los registros
+            maestros = MaestroEquipo.objects.all()
 
     # Renderiza la plantilla con los datos necesarios
-    return render(request, 'maestro/index.html', {'maestros': maestros, 'filtro': filtro, 'query': query})
+    return render(request, 'maestro/index.html', {'maestros': maestros, 'filtro': filtros, 'query': query})
 
 
 @login_required(login_url='login')

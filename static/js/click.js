@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const rows = document.querySelectorAll(".clickable-row");
+
     rows.forEach(row => {
         row.addEventListener("click", function (event) {
             // Evitar que el click en un botón o enlace dentro de la fila haga algo diferente
@@ -18,13 +19,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeFiltersBtn = document.getElementById('closeFiltersBtn');
     const filtersPanel = document.getElementById('filtersPanel');
 
-    // Abre el panel de filtros al hacer clic en el botón
-    openFiltersBtn.addEventListener('click', function () {
-        filtersPanel.classList.add('open');
-    });
+    // Asegurarse de que los elementos existen antes de intentar usarlos
+    if (openFiltersBtn && filtersPanel) {
+        openFiltersBtn.addEventListener('click', function () {
+            filtersPanel.classList.add('open');
+        });
+    }
 
-    // Cierra el panel de filtros al hacer clic en el botón "Cerrar"
-    closeFiltersBtn.addEventListener('click', function () {
-        filtersPanel.classList.remove('open');
-    });
+    if (closeFiltersBtn && filtersPanel) {
+        closeFiltersBtn.addEventListener('click', function () {
+            filtersPanel.classList.remove('open');
+        });
+    }
 });
