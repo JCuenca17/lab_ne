@@ -5,56 +5,75 @@
 {% endblock %}
 
 {% block content %}
-  <div class="card">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center card-header">
-      <div class="d-flex mb-2 mb-md-0">
-        <a href="{% url 'crear' %}" class="btn btn-primary me-2" role="button">Agregar</a>
-      </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-center card-header">
+            <!-- Contenedor para el botón "Agregar" -->
+            <div class="d-flex mb-2 mb-md-0">
+              <a href="{% url 'crear' %}" class="btn btn-primary me-2" role="button">Agregar</a>
+              <!-- Botón "Filtrar" pegado al botón "Agregar" -->
+              <button class="btn btn-outline-secondary ms-2" id="openFiltersBtn">Filtrar</button>
+            </div>
 
-      <form method="get" action="" class="d-flex" style="max-width: 400px; width: 100%;">
-        <input type="text" name="search" class="form-control me-2" placeholder="Buscar registros..." value="{{ request.GET.search|default:'' }}" />
-        <button class="btn btn-outline-secondary" type="submit">Buscar</button>
-      </form>
-    </div>
+            <!-- Contenedor para el formulario de búsqueda pegado a la derecha -->
+            <div class="d-flex justify-content-end w-100">
+              <form method="get" action="" class="d-flex" style="max-width: 400px; width: 100%;">
+                <input type="text" name="search" class="form-control me-2" placeholder="Buscar registros..." value="{{ request.GET.search|default:'' }}" />
+                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+              </form>
+            </div>
+          </div>
 
-    <div class="card-body">
-      <h4 class="card-title">Maestro de Equipos</h4>
-      <div class="d-flex justify-content-center mb-3">
-        <a href="{% url 'maestro' %}?filtro=activos" class="btn btn-success me-2 {% if filtro == 'activos' %}active{% endif %}">Activados</a>
-        <a href="{% url 'maestro' %}?filtro=inactivos" class="btn btn-warning me-2 {% if filtro == 'inactivos' %}active{% endif %}">Desactivados</a>
-        <a href="{% url 'maestro' %}?filtro=eliminados" class="btn btn-danger {% if filtro == 'eliminados' %}active{% endif %}">Eliminados</a>
-      </div>
+          <div class="card-body">
+            <h4 class="card-title">Maestro de Equipos</h4>
+            
+            <!-- Panel de filtros (se abre por la derecha) -->
+            <div id="filtersPanel" class="filters-panel">
+              <form method="get" action="" class="d-flex flex-column p-3">
+                <h5>Filtrar por estado:</h5>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="filtro" value="activos" id="activo" {% if 'activos' in filtro %}checked{% endif %}>
+                  <label class="form-check-label" for="activo">Activados</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="filtro" value="inactivos" id="inactivo" {% if 'inactivos' in filtro %}checked{% endif %}>
+                  <label class="form-check-label" for="inactivo">Desactivados</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="filtro" value="eliminados" id="eliminado" {% if 'eliminados' in filtro %}checked{% endif %}>
+                  <label class="form-check-label" for="eliminado">Eliminados</label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Aplicar Filtro</button>
+              </form>
+              <button id="closeFiltersBtn" class="btn btn-danger mt-3">Cerrar</button>
+            </div>
 
-      <div class="table">
-        <table class="tb table">
-          <thead class="the table-primary">
-            <tr class="tr">
-              <th scope="col" class="th" data-titulo="id">ID</th>
-              <th scope="col" class="th" data-titulo="nombre">Nombre</th>
-              {% comment %} <th scope="col" class="th" data-titulo="taller">Taller de Mantenimiento</th>
-              <th scope="col" class="th" data-titulo="tipo">Tipo de Equipo</th>
-              <th scope="col" class="th" data-titulo="ubicacion">Ubicación</th> {% endcomment %}
-              <th scope="col" class="th" data-titulo="estado">Estado de Registro</th>
-              {% comment %} <th scope="col" class="th" data-titulo="acciones">Acciones</th> {% endcomment %}
-            </tr>
-          </thead>
-          <tbody>
-            {% for maestro in maestros %}
-              <tr class="tr clickable-row" data-url="{% url 'detalle' maestro.id %}">
-                <td class="td" data-titulo="id">{{ maestro.id }}</td>
-                <td class="td" data-titulo="nombre">{{ maestro.nombre }}</td>
-                {% comment %} <td class="td" data-titulo="taller">{{ maestro.taller_mantenimiento.nombre }}</td>
-                <td class="td" data-titulo="tipo">{{ maestro.tipo_equipo.nombre }}</td>
-                <td class="td" data-titulo="ubicacion">{{ maestro.ubicacion }}</td> {% endcomment %}
-                <td class="td" data-titulo="estado">{{ maestro.estado_registro }}</td>
-                {% comment %} <td class="td" data-titulo="acciones">
-                  <a name="" id="" class="btn btn-secondary" href="{% url 'detalle' maestro.id %}" role="button">Ver Detalle</a>
-                </td> {% endcomment %}
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            <div class="table">
+              <table class="tb table">
+                <thead class="the table-primary">
+                  <tr class="tr">
+                    <th scope="col" class="th">ID</th>
+                    <th scope="col" class="th">Nombre</th>
+                    <th scope="col" class="th">Estado de Registro</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for maestro in maestros %}
+                    <tr class="tr clickable-row" data-url="{% url 'detalle' maestro.id %}">
+                      <td class="td">{{ maestro.id }}</td>
+                      <td class="td">{{ maestro.nombre }}</td>
+                      <td class="td">{{ maestro.estado_registro }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
 {% endblock %}

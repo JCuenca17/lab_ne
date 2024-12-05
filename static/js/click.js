@@ -12,3 +12,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const openFiltersBtn = document.getElementById('openFiltersBtn');
+    const closeFiltersBtn = document.getElementById('closeFiltersBtn');
+    const filtersPanel = document.getElementById('filtersPanel');
+
+    // Abre el panel de filtros al hacer clic en el botón
+    openFiltersBtn.addEventListener('click', function () {
+        filtersPanel.classList.add('open');
+    });
+
+    // Cierra el panel de filtros al hacer clic en el botón "Cerrar"
+    closeFiltersBtn.addEventListener('click', function () {
+        filtersPanel.classList.remove('open');
+    });
+});

@@ -1,3 +1,92 @@
+/* Animación para el navbar que se desliza desde arriba */
+.navbar-collapse {
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+    max-height: 0;
+    /* Inicialmente cerrado */
+}
+
+.navbar-collapse.collapse.show {
+    max-height: 500px;
+    /* Ajusta según el tamaño de tu contenido */
+}
+
+/* Animación para el ícono del hamburguesa */
+.navbar-toggler {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-toggler.collapsed {
+    transform: rotate(0deg);
+}
+
+.navbar-toggler:not(.collapsed) {
+    transform: rotate(180deg);
+    /* Animación al hacer clic */
+}
+
+
+/* Asegurarse de que el menú esté bien alineado */
+.navbar-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+/* Estilos para el panel de filtros que se abre desde la derecha */
+.filters-panel {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    /* Asegúrate de que se superponga sobre el contenido */
+}
+
+/* Panel de filtros visible */
+.filters-panel.open {
+    right: 0;
+}
+
+/* Asegurarse de que el botón "Filtrar" y el formulario de búsqueda no se sobrepongan */
+#openFiltersBtn {
+    z-index: 1;
+    /* Asegura que el botón no se quede debajo del filtro */
+}
+
+/* Estilos para el formulario de búsqueda */
+form {
+    z-index: 1;
+    /* Asegura que el formulario no se vea tapado por otros elementos */
+}
+
+/* El botón "Filtrar" debe estar alineado a la derecha junto al "Agregar" */
+.d-flex.justify-content-between {
+    display: flex;
+    justify-content: space-between;
+    /* Asegura la separación de los elementos */
+    width: 100%;
+}
+
+.d-flex.justify-content-end {
+    display: flex;
+    justify-content: flex-end;
+    /* Alinea el formulario de búsqueda a la derecha */
+}
+
+#closeFiltersBtn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 .clickable-row .td {
     transition: background-color 0.3s ease;
 }
