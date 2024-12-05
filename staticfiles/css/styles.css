@@ -1,11 +1,10 @@
-/* Efectos generales para todas las pantallas */
-.clickable-row:hover {
-    background-color: red;
-    cursor: pointer;
+.clickable-row .td {
+    transition: background-color 0.3s ease;
 }
 
-.clickable-row:active {
-    background-color: red;
+.clickable-row:hover .td {
+    background-color: lightgray;
+    cursor: pointer;
 }
 
 @media (max-width: 30em) {
@@ -26,6 +25,11 @@
         border: 1px solid lightgrey;
         padding: 1em;
         margin-bottom: 1em;
+        transition: background-color 0.3s ease;
+    }
+
+    .tb .tr:hover {
+        background-color: lightgray;
     }
 
     .tb .td[data-titulo] {
@@ -40,7 +44,7 @@
     .tb td[data-titulo]::before {
         content: attr(data-titulo);
         width: 90px;
-        color: silver;
+        color: #555;
         font-weight: bold;
     }
 
