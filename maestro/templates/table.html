@@ -1,0 +1,21 @@
+<!-- table.html -->
+<div class="table">
+  <table class="tb table">
+    <thead class="the table-primary">
+      <tr class="tr">
+        <th scope="col" class="th">ID</th>
+        <th scope="col" class="th">Nombre</th>
+        <th scope="col" class="th">Estado de Registro</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for objeto in objetos %}
+        <tr class="tr clickable-row" data-url="{% url 'detalle' objeto.id %}">
+          <td data-titulo="id" class="td">{{ objeto.id }}</td>
+          <td data-titulo="nombre" class="td">{{ objeto.nombre|default:'N/A' }}</td>
+          <td data-titulo="estado" class="td">{{ objeto.estado_registro|default:'Desconocido' }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

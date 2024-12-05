@@ -15,7 +15,7 @@
           {% if user.is_authenticated %}
             <!-- Mostrar botones cuando el usuario esté logueado -->
             <div class="mb-3">
-              <a href="{% url 'maestro' %}" class="btn btn-outline-light w-100" type="button">Tablas</a>
+              <a href="{% url 'tablas' %}" class="btn btn-outline-light w-100" type="button">Tablas de Mantenimiento</a>
             </div>
             <div>
               <a href="{% url 'logout' %}" class="btn btn-outline-light w-100" type="button">Cerrar Sesión</a>

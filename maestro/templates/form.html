@@ -1,0 +1,43 @@
+<form enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  {% for campo in formulario %}
+    <div class="mb-3">
+      <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
+      {% if campo.name == 'estado_registro' and not formulario.instance.pk %}
+        <!-- Campo solo lectura para estado_registro al crear -->
+        <input type="text" class="form-control" value="{{ campo.value }}" readonly />
+      {% else %}
+        <!-- Renderizado dinámico de los campos -->
+        {{ campo }}
+      {% endif %}
+    </div>
+    <div class="col-12 help-text">{{ campo.errors }}</div>
+  {% endfor %}
+
+  <div class="d-flex justify-content-center mt-3">
+    <!-- Botón Guardar -->
+    <button class="btn btn-success me-2 d-flex align-items-center" type="submit">
+      Guardar
+      <i class="bi bi-save ms-2"></i>
+    </button>
+
+    <!-- Botón Cancelar -->
+    <a name="" id="" class="btn btn-primary me-2 d-flex align-items-center" href="{% url 'tablas' %}" role="button">
+      Cancelar
+      <i class="bi bi-x-circle ms-2"></i>
+    </a>
+
+    <!-- Botón Activar/Desactivar dinámico -->
+    {% if objeto and objeto.estado_registro == 'A' %}
+      <a href="{% url 'desactivar' objeto.id %}" class="btn btn-warning d-flex align-items-center">
+        Desactivar
+        <i class="bi bi-toggle-off ms-2"></i>
+      </a>
+    {% elif objeto and objeto.estado_registro == 'I' %}
+      <a href="{% url 'activar' objeto.id %}" class="btn btn-success d-flex align-items-center">
+        Activar
+        <i class="bi bi-toggle-on ms-2"></i>
+      </a>
+    {% endif %}
+  </div>
+</form>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import MaestroEquipo, TallerMantenimiento, TipoEquipo
-from .forms import MaestroForm
+from .forms import MaestroForm, TallerForm, TipoForm
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -11,7 +11,11 @@ def inicio(request):
     return render(request, 'pages/inicio.html')
 
 
-# Definimos una lista de los modelos y los filtros para cada uno
+@login_required(login_url='login')
+def tablas(request):
+    return render(request, 'pages/tablas.html')
+
+
 MODELOS = {
     'maestro': {
         'model': MaestroEquipo,
@@ -21,23 +25,30 @@ MODELOS = {
         'related_models': {
             'taller': TallerMantenimiento,
             'tipo': TipoEquipo
-        }
+        },
+        'form': MaestroForm,
+        'url': 'maestro'
     },
     'taller': {
         'model': TallerMantenimiento,
         'filters': ['activos', 'inactivos', 'eliminados'],
         'template': 'taller/index.html',
-        'related_models': {}  # Este modelo no tiene filtros adicionales
+        'related_models': {},
+        'form': TallerForm,
+        'url': 'taller'
     },
     'tipo': {
         'model': TipoEquipo,
         'filters': ['activos', 'inactivos', 'eliminados'],
         'template': 'tipo/index.html',
-        'related_models': {}  # Este modelo no tiene filtros adicionales
+        'related_models': {},
+        'form': TipoForm,
+        'url': 'tipo'
     },
 }
 
 
+@login_required(login_url='login')
 def listar(request, modelo):
     # Obtener la configuración del modelo
     modelo_config = MODELOS.get(modelo)
@@ -100,18 +111,27 @@ def listar(request, modelo):
         'objetos': objetos,
         'filtro': filtros,
         'query': query,
+        'modelo_nombre': modelo,
         'modelos_relacionados': modelos_relacionados,
         'filtro_seleccionado': filtro_seleccionado,
     })
 
 
 @login_required(login_url='login')
-def crear(request):
-    formulario = MaestroForm(request.POST or None)
+def crear(request, modelo):
+    # Obtener la configuración del modelo
+    modelo_config = MODELOS.get(modelo)
+    if not modelo_config:
+        return render(request, 'error.html', {'message': 'Modelo no encontrado'})
+
+    # Obtener el formulario correspondiente
+    formulario = modelo_config['form'](request.POST or None)
+
     if formulario.is_valid():
         formulario.save()
-        return redirect('maestro')
-    return render(request, 'maestro/crear.html', {'formulario': formulario})
+        return redirect(modelo_config['url'])
+
+    return render(request, 'crear.html', {'formulario': formulario})
 
 
 @login_required(login_url='login')
