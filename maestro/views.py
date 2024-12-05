@@ -135,15 +135,35 @@ def crear(request, modelo):
 
 
 @login_required(login_url='login')
-def editar(request, id):
-    maestros = MaestroEquipo.objects.get(id=id)
-    formulario = MaestroForm(request.POST or None, instance=maestros)
+def editar(request, modelo, id):
+    # Obtener la configuración del modelo
+    modelo_config = MODELOS.get(modelo)
+    if not modelo_config:
+        return render(request, 'error.html', {'message': 'Modelo no encontrado'})
+
+    # Obtener el modelo y el formulario correspondiente
+    model_class = modelo_config['model']
+    form_class = modelo_config['form']
+
+    # Intentar obtener el objeto a editar
+    try:
+        objeto = model_class.objects.get(id=id)
+    except model_class.DoesNotExist:
+        return render(request, 'error.html', {'message': 'Objeto no encontrado'})
+
+    # Crear el formulario con los datos del objeto
+    formulario = form_class(request.POST or None, instance=objeto)
+
     if formulario.is_valid() and request.method == 'POST':
         formulario.save()
-        return redirect('maestro')
-    return render(request, 'maestro/editar.html', {
+        # Redirigir al listado correspondiente
+        return redirect(modelo_config['url'])
+
+    # Renderizar la plantilla con el formulario
+    return render(request, 'editar.html', {
         'formulario': formulario,
-        'maestro': maestros
+        'objeto': objeto,
+        'modelo_nombre': modelo
     })
 
 
@@ -173,6 +193,32 @@ def desactivar(request, id):
 
 
 @login_required(login_url='login')
-def detalle(request, id):
-    maestro = MaestroEquipo.objects.get(id=id)
-    return render(request, 'maestro/detalle.html', {'maestro': maestro})
+def detalle(request, modelo, id):
+    # Obtener la configuración del modelo
+    modelo_config = MODELOS.get(modelo)
+    if not modelo_config:
+        return render(request, 'error.html', {'message': 'Modelo no encontrado'})
+
+    # Obtener el modelo correspondiente de la configuración
+    model_class = modelo_config['model']
+
+    # Intentar obtener el objeto
+    try:
+        objeto = model_class.objects.get(id=id)
+    except model_class.DoesNotExist:
+        return render(request, 'error.html', {'message': 'Objeto no encontrado'})
+
+    # Crear un diccionario con los campos disponibles del objeto
+    campos_objeto = {}
+    for field in objeto._meta.get_fields():
+        # Si el campo existe, lo añadimos al diccionario
+        campo_name = field.name
+        if hasattr(objeto, campo_name):
+            campos_objeto[campo_name] = getattr(objeto, campo_name)
+
+    # Renderizar el template con el objeto y sus campos
+    return render(request, 'detalle.html', {
+        'objeto': objeto,
+        'modelo_nombre': modelo,
+        'campos_objeto': campos_objeto,
+    })

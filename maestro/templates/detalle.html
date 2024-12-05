@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+  Detalle del {{ modelo_nombre|capfirst }}
+{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-header">
+      <h4>Detalles de {{ objeto }}</h4>
+    </div>
+    <div class="card-body">
+      <ul class="list-group mb-3">
+        {% for campo, valor in campos_objeto.items %}
+          <li class="list-group-item">
+            <strong>{{ campo|capfirst }}:</strong> {{ valor }}
+          </li>
+        {% endfor %}
+
+        {% if objeto.estado_registro %}
+          <li class="list-group-item">
+            <strong>Estado:</strong>
+            {% if objeto.estado_registro == 'A' %}
+              Activo
+            {% elif objeto.estado_registro == 'I' %}
+              Inactivo
+            {% elif objeto.estado_registro == '*' %}
+              Eliminado
+            {% endif %}
+          </li>
+        {% endif %}
+      </ul>
+
+      <!-- Botones centrados -->
+      <div class="d-flex justify-content-center mt-3">
+        {% if objeto.estado_registro != '*' %}
+          <!-- Botón Editar con ícono -->
+          <a href="{% url 'editar' modelo_nombre objeto.id %}" class="btn btn-info me-2 d-inline-flex align-items-center py-2 px-3">
+            Editar
+            <i class="bi bi-pencil ms-2"></i> <!-- Ícono de editar -->
+          </a>
+
+          <!-- Botón Eliminar con ícono -->
+          <a href="{% url 'eliminar' objeto.id %}" class="btn btn-danger me-2 d-inline-flex align-items-center py-2 px-3">
+            Eliminar
+            <i class="bi bi-trash ms-2"></i> <!-- Ícono de eliminar -->
+          </a>
+        {% endif %}
+
+        <!-- Botón Volver a la Lista con ícono -->
+        <a href="{% url modelo_nombre %}" class="btn btn-secondary d-inline-flex align-items-center py-2 px-3">
+          Volver
+          <i class="bi bi-arrow-left ms-2"></i> <!-- Ícono de volver -->
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

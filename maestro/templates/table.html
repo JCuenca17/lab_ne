@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       {% for objeto in objetos %}
-        <tr class="tr clickable-row" data-url="{% url 'detalle' objeto.id %}">
+        <tr class="tr clickable-row" data-url="{% url 'detalle' modelo_nombre objeto.id %}">
           <td data-titulo="id" class="td">{{ objeto.id }}</td>
           <td data-titulo="nombre" class="td">{{ objeto.nombre|default:'N/A' }}</td>
           <td data-titulo="estado" class="td">{{ objeto.estado_registro|default:'Desconocido' }}</td>

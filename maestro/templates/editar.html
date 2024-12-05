@@ -8,8 +8,12 @@
   <div class="card">
     <div class="card-header">Editar</div>
     <div class="card-body">
-      <h4 class="card-title">Datos de {{ maestro.nombre }}</h4>
-      {% include 'maestro/form.html' %}
+      <h4 class="card-title">Datos de {{ objeto.nombre }}</h4>
+      <form method="post">
+        {% csrf_token %}
+        {{ formulario.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </form>
     </div>
     <div class="card-footer text-muted"></div>
   </div>
