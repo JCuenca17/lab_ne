@@ -62,9 +62,9 @@
                 <tbody>
                   {% for maestro in maestros %}
                     <tr class="tr clickable-row" data-url="{% url 'detalle' maestro.id %}">
-                      <td class="td">{{ maestro.id }}</td>
-                      <td class="td">{{ maestro.nombre }}</td>
-                      <td class="td">{{ maestro.estado_registro }}</td>
+                      <td data-titulo="id" class="td">{{ maestro.id }}</td>
+                      <td data-titulo="nombre" class="td">{{ maestro.nombre }}</td>
+                      <td data-titulo="estado" class="td">{{ maestro.estado_registro }}</td>
                     </tr>
                   {% endfor %}
                 </tbody>
