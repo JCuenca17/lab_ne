@@ -42,21 +42,21 @@
       <div class="d-flex justify-content-center mt-3">
         {% if maestro.estado_registro != '*' %}
           <!-- Botón Editar con ícono -->
-          <a href="{% url 'editar' maestro.id %}" class="btn btn-info me-2 d-flex align-items-center">
+          <a href="{% url 'editar' maestro.id %}" class="btn btn-info me-2 d-inline-flex align-items-center py-2 px-3">
             Editar
             <i class="bi bi-pencil ms-2"></i> <!-- Ícono de editar -->
           </a>
 
           <!-- Botón Eliminar con ícono -->
-          <a href="{% url 'eliminar' maestro.id %}" class="btn btn-danger me-2 d-flex align-items-center">
+          <a href="{% url 'eliminar' maestro.id %}" class="btn btn-danger me-2 d-inline-flex align-items-center py-2 px-3">
             Eliminar
             <i class="bi bi-trash ms-2"></i> <!-- Ícono de eliminar -->
           </a>
         {% endif %}
 
         <!-- Botón Volver a la Lista con ícono -->
-        <a href="{% url 'maestro' %}" class="btn btn-secondary d-flex align-items-center">
-          Volver a la Lista
+        <a href="{% url 'maestro' %}" class="btn btn-secondary d-inline-flex align-items-center py-2 px-3">
+          Volver
           <i class="bi bi-arrow-left ms-2"></i> <!-- Ícono de volver -->
         </a>
       </div>
