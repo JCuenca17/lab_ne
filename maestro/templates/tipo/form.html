@@ -1,0 +1,41 @@
+<form enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  {% for campo in formulario %}
+    <div class="mb-3">
+      <label for="" class="form-label">{{ campo.label }}</label>
+      {% if campo.name == 'estado_registro' and not formulario.instance.pk %}
+        <input type="text" class="form-control" value="{{ campo.value }}" readonly />
+      {% else %}
+        {{ campo }}
+      {% endif %}
+    </div>
+    <div class="col-12 help-text">{{ campo.errors }}</div>
+  {% endfor %}
+
+  <div class="d-flex justify-content-center mt-3">
+    <!-- Botón Guardar con ícono (cambiado a <button>) -->
+    <button class="btn btn-success me-2 d-flex align-items-center" type="submit">
+      Guardar
+      <i class="bi bi-save ms-2"></i> <!-- Ícono de guardar -->
+    </button>
+
+    <!-- Botón Cancelar con ícono -->
+    <a name="" id="" class="btn btn-primary me-2 d-flex align-items-center" href="{% url 'maestro' %}" role="button">
+      Cancelar
+      <i class="bi bi-x-circle ms-2"></i> <!-- Ícono de cancelar -->
+    </a>
+
+    <!-- Botón para activar/desactivar con ícono -->
+    {% if maestro.estado_registro == 'A' %}
+      <a href="{% url 'desactivar' maestro.id %}" class="btn btn-warning d-flex align-items-center">
+        Desactivar
+        <i class="bi bi-toggle-off ms-2"></i> <!-- Ícono de desactivar -->
+      </a>
+    {% elif maestro.estado_registro == 'I' %}
+      <a href="{% url 'activar' maestro.id %}" class="btn btn-success d-flex align-items-center">
+        Activar
+        <i class="bi bi-toggle-on ms-2"></i> <!-- Ícono de activar -->
+      </a>
+    {% endif %}
+  </div>
+</form>

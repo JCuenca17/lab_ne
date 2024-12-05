@@ -13,28 +13,7 @@
       <div class="form-check">
         <input class="form-check-input" type="checkbox" name="filtro" value="eliminados" id="eliminado" {% if 'eliminados' in filtro %}checked{% endif %}>
         <label class="form-check-label" for="eliminado">Eliminados</label>
-      </div>
-  
-      <h5 class="mt-3">Filtrar por Taller de Mantenimiento:</h5>
-      {% if modelos_relacionados.taller %}
-          {% for taller in modelos_relacionados.taller %}
-              <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="taller" value="{{ taller.id }}" id="taller_{{ taller.id }}" {% if taller.id in filtro_seleccionado.taller %}checked{% endif %}>
-                  <label class="form-check-label" for="taller_{{ taller.id }}">{{ taller.nombre }}</label>
-              </div>
-          {% endfor %}
-      {% endif %}
-      
-      <h5 class="mt-3">Filtrar por Tipo de Equipo:</h5>
-      {% if modelos_relacionados.tipo %}
-          {% for tipo in modelos_relacionados.tipo %}
-              <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="tipo" value="{{ tipo.id }}" id="tipo_{{ tipo.id }}" {% if tipo.id in filtro_seleccionado.tipo %}checked{% endif %}>
-                  <label class="form-check-label" for="tipo_{{ tipo.id }}">{{ tipo.nombre }}</label>
-              </div>
-          {% endfor %}
-      {% endif %}
-      
+      </div>      
   
       <button type="submit" class="btn btn-primary mt-3 d-flex align-items-center">
         Aplicar Filtro

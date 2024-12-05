@@ -11,65 +11,97 @@ def inicio(request):
     return render(request, 'pages/inicio.html')
 
 
-def nosotros(request):
-    return render(request, 'pages/nosotros.html')
+# Definimos una lista de los modelos y los filtros para cada uno
+MODELOS = {
+    'maestro': {
+        'model': MaestroEquipo,
+        'filters': ['activos', 'inactivos', 'eliminados'],
+        'additional_filters': ['taller', 'tipo'],
+        'template': 'maestro/index.html',
+        'related_models': {
+            'taller': TallerMantenimiento,
+            'tipo': TipoEquipo
+        }
+    },
+    'taller': {
+        'model': TallerMantenimiento,
+        'filters': ['activos', 'inactivos', 'eliminados'],
+        'template': 'taller/index.html',
+        'related_models': {}  # Este modelo no tiene filtros adicionales
+    },
+    'tipo': {
+        'model': TipoEquipo,
+        'filters': ['activos', 'inactivos', 'eliminados'],
+        'template': 'tipo/index.html',
+        'related_models': {}  # Este modelo no tiene filtros adicionales
+    },
+}
 
 
-@login_required(login_url='login')
-def maestros(request):
-    query = request.GET.get('search', '')  # Obtiene la consulta de búsqueda
-    # Obtiene todos los filtros seleccionados
+def listar(request, modelo):
+    # Obtener la configuración del modelo
+    modelo_config = MODELOS.get(modelo)
+    if not modelo_config:
+        return render(request, 'error.html', {'message': 'Modelo no encontrado'})
+
+    # Obtener los parámetros de búsqueda y filtros
+    query = request.GET.get('search', '')
     filtros = request.GET.getlist('filtro')
-    talleres_seleccionados = request.GET.getlist(
-        'taller')  # Obtener los talleres seleccionados
-    # Obtener los tipos de equipo seleccionados
-    tipos_seleccionados = request.GET.getlist('tipo')
+    filtro_seleccionado = {}
 
-    # Filtrado por búsqueda
+    # Obtener los filtros adicionales (si aplican)
+    additional_filters = modelo_config.get('additional_filters', [])
+    for filtro in additional_filters:
+        filtro_seleccionado[filtro] = request.GET.getlist(filtro)
+
+    # Filtro por búsqueda
     if query:
-        maestros = MaestroEquipo.objects.filter(
-            Q(id__icontains=query) |
-            Q(nombre__icontains=query) |
-            Q(ubicacion__icontains=query)
-        )
+        q_filter = Q()
+        # Agregar búsqueda genérica por campo (solo si esos campos existen en el modelo)
+        if hasattr(modelo_config['model'], 'id'):
+            q_filter |= Q(id__icontains=query)
+        if hasattr(modelo_config['model'], 'nombre'):
+            q_filter |= Q(nombre__icontains=query)
+        if hasattr(modelo_config['model'], 'ubicacion'):
+            q_filter |= Q(ubicacion__icontains=query)
+
+        objetos = modelo_config['model'].objects.filter(q_filter)
     else:
-        if filtros:
-            # Inicializamos el filtro base con un Q() vacío
-            query_filtro = Q()
-            if 'activos' in filtros:
-                query_filtro |= Q(estado_registro='A')
-            if 'inactivos' in filtros:
-                query_filtro |= Q(estado_registro='I')
-            if 'eliminados' in filtros:
-                query_filtro |= Q(estado_registro='*')
+        # Filtro de estado
+        query_filtro = Q()
+        for filtro in modelo_config['filters']:
+            if filtro in filtros:
+                if filtro == 'activos':
+                    query_filtro |= Q(estado_registro='A')
+                elif filtro == 'inactivos':
+                    query_filtro |= Q(estado_registro='I')
+                elif filtro == 'eliminados':
+                    query_filtro |= Q(estado_registro='*')
 
-            maestros = MaestroEquipo.objects.filter(query_filtro)
-        else:
-            # Si no hay filtros seleccionados, mostramos todos los registros
-            maestros = MaestroEquipo.objects.all()
+        objetos = modelo_config['model'].objects.filter(query_filtro)
 
-        # Filtrar por talleres seleccionados si se eligieron
-        if talleres_seleccionados:
-            maestros = maestros.filter(
-                taller_mantenimiento__id__in=talleres_seleccionados)
+    # Aplicar filtros adicionales si existen (ej. taller, tipo)
+    for filtro, valores in filtro_seleccionado.items():
+        if valores:
+            if filtro == 'taller':  # Filtrar por taller
+                objetos = objetos.filter(taller_mantenimiento__id__in=valores)
+            elif filtro == 'tipo':  # Filtrar por tipo
+                objetos = objetos.filter(tipo_equipo__id__in=valores)
+            else:
+                objetos = objetos.filter(**{f'{filtro}__id__in': valores})
 
-        # Filtrar por tipos de equipo seleccionados si se eligieron
-        if tipos_seleccionados:
-            maestros = maestros.filter(tipo_equipo__id__in=tipos_seleccionados)
+    # Obtener los modelos relacionados (como Talleres, Tipos)
+    modelos_relacionados = {}
+    for filtro, related_model in modelo_config['related_models'].items():
+        modelos_relacionados[filtro] = related_model.objects.all()
 
-    # Obtener todos los talleres y tipos de equipo para pasarlos a la plantilla
-    talleres = TallerMantenimiento.objects.all()
-    tipos = TipoEquipo.objects.all()
-
-    # Renderiza la plantilla con los datos necesarios
-    return render(request, 'maestro/index.html', {
-        'maestros': maestros,
+    # Renderizar la plantilla con los objetos obtenidos
+    return render(request, modelo_config['template'], {
+        'objetos': objetos,
         'filtro': filtros,
         'query': query,
-        'talleres': talleres,
-        'tipos': tipos,  # Pasamos los tipos de equipo
-        'talleres_seleccionados': talleres_seleccionados,
-        'tipos_seleccionados': tipos_seleccionados  # Pasamos los tipos seleccionados
+        'modelos_relacionados': modelos_relacionados,
+        'filtro_seleccionado': filtro_seleccionado,
     })
 
 

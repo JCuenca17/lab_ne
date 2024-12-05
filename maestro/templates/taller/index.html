@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+  Maestro de Equipos
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          {% include 'taller/header.html' %}
+
+          <div class="card-body">
+            <h4 class="card-title">Maestro de Equipos</h4>
+
+            {% include 'taller/filtros.html' %}
+            {% include 'taller/table.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

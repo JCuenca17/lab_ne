@@ -6,7 +6,9 @@ from . import views
 urlpatterns = [
     path('', views.inicio, name='inicio'),
     # path('maestro', views.maestros, name='maestro'),
-    path('maestro/', views.maestros, name='maestro'),
+    path('maestro/', views.listar, {'modelo': 'maestro'}, name='maestro'),
+    path('taller/', views.listar, {'modelo': 'taller'}, name='taller'),
+    path('tipo/', views.listar, {'modelo': 'tipo'}, name='tipo'),
     path('maestro/crear', views.crear, name='crear'),
     path('maestro/editar', views.editar, name='editar'),
     path('eliminar/<str:id>', views.eliminar, name='eliminar'),
