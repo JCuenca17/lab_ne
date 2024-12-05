@@ -1,0 +1,21 @@
+<!-- maestro/table.html -->
+<div class="table">
+  <table class="tb table">
+    <thead class="the table-primary">
+      <tr class="tr">
+        <th scope="col" class="th">ID</th>
+        <th scope="col" class="th">Nombre</th>
+        <th scope="col" class="th">Estado de Registro</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for maestro in maestros %}
+        <tr class="tr clickable-row" data-url="{% url 'detalle' maestro.id %}">
+          <td data-titulo="id" class="td">{{ maestro.id }}</td>
+          <td data-titulo="nombre" class="td">{{ maestro.nombre }}</td>
+          <td data-titulo="estado" class="td">{{ maestro.estado_registro }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

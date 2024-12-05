@@ -1,0 +1,44 @@
+<!-- maestro/filtros.html -->
+<div id="filtersPanel" class="filters-panel">
+    <form method="get" action="" class="d-flex flex-column p-3">
+      <h5>Filtrar por estado:</h5>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="filtro" value="activos" id="activo" {% if 'activos' in filtro %}checked{% endif %}>
+        <label class="form-check-label" for="activo">Activados</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="filtro" value="inactivos" id="inactivo" {% if 'inactivos' in filtro %}checked{% endif %}>
+        <label class="form-check-label" for="inactivo">Desactivados</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="filtro" value="eliminados" id="eliminado" {% if 'eliminados' in filtro %}checked{% endif %}>
+        <label class="form-check-label" for="eliminado">Eliminados</label>
+      </div>
+  
+      <h5 class="mt-3">Filtrar por Taller de Mantenimiento:</h5>
+      {% for taller in talleres %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="taller" value="{{ taller.id }}" id="taller_{{ taller.id }}" {% if taller.id in talleres_seleccionados %}checked{% endif %}>
+          <label class="form-check-label" for="taller_{{ taller.id }}">{{ taller.nombre }}</label>
+        </div>
+      {% endfor %}
+  
+      <h5 class="mt-3">Filtrar por Tipo de Equipo:</h5>
+      {% for tipo in tipos %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="tipo" value="{{ tipo.id }}" id="tipo_{{ tipo.id }}" {% if tipo.id in tipos_seleccionados %}checked{% endif %}>
+          <label class="form-check-label" for="tipo_{{ tipo.id }}">{{ tipo.nombre }}</label>
+        </div>
+      {% endfor %}
+  
+      <button type="submit" class="btn btn-primary mt-3 d-flex align-items-center">
+        Aplicar Filtro
+        <i class="bi bi-check ms-2"></i>
+      </button>
+    </form>
+    <button id="closeFiltersBtn" class="btn btn-danger mt-3 d-flex align-items-center">
+      Cerrar
+      <i class="bi bi-x-circle ms-2"></i>
+    </button>
+  </div>
+  

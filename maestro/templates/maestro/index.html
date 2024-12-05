@@ -9,101 +9,13 @@
     <div class="row">
       <div class="col-12">
         <div class="card">
-          <div class="d-flex flex-column flex-md-row justify-content-between align-items-center card-header">
-            <!-- Contenedor para el botón "Agregar" -->
-            <div class="d-flex mb-2 mb-md-0">
-              <a href="{% url 'crear' %}" class="btn btn-primary me-2 d-flex align-items-center" role="button">
-                Agregar
-                <i class="bi bi-plus-circle ms-2"></i> <!-- Ícono de agregar (Bootstrap 5) -->
-              </a>
-              <!-- Botón "Filtrar" pegado al botón "Agregar" -->
-              <button class="btn btn-outline-secondary ms-2 d-flex align-items-center" id="openFiltersBtn">
-                Filtrar
-                <i class="bi bi-funnel ms-2"></i> <!-- Ícono de filtro (Bootstrap 5) -->
-              </button>
-            </div>
-
-            <!-- Contenedor para el formulario de búsqueda pegado a la derecha -->
-            <div class="d-flex justify-content-end w-100">
-              <form method="get" action="" class="d-flex" style="max-width: 400px; width: 100%;">
-                <input type="text" name="search" class="form-control me-2" placeholder="Buscar registros..." value="{{ query|default:'' }}" />
-                <button class="btn btn-outline-secondary d-flex align-items-center" type="submit">
-                  Buscar
-                  <i class="bi bi-search ms-2"></i> <!-- Ícono de búsqueda (Bootstrap 5) -->
-                </button>
-              </form>
-            </div>
-          </div>
+          {% include 'maestro/header.html' %}
 
           <div class="card-body">
             <h4 class="card-title">Maestro de Equipos</h4>
-            
-            <!-- Panel de filtros (se abre por la derecha) -->
-            <div id="filtersPanel" class="filters-panel">
-              <form method="get" action="" class="d-flex flex-column p-3">
-                <h5>Filtrar por estado:</h5>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="filtro" value="activos" id="activo" {% if 'activos' in filtro %}checked{% endif %}>
-                  <label class="form-check-label" for="activo">Activados</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="filtro" value="inactivos" id="inactivo" {% if 'inactivos' in filtro %}checked{% endif %}>
-                  <label class="form-check-label" for="inactivo">Desactivados</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="filtro" value="eliminados" id="eliminado" {% if 'eliminados' in filtro %}checked{% endif %}>
-                  <label class="form-check-label" for="eliminado">Eliminados</label>
-                </div>
 
-                <!-- Filtro por taller de mantenimiento -->
-                <h5 class="mt-3">Filtrar por Taller de Mantenimiento:</h5>
-                {% for taller in talleres %}
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="taller" value="{{ taller.id }}" id="taller_{{ taller.id }}" {% if taller.id in talleres_seleccionados %}checked{% endif %}>
-                    <label class="form-check-label" for="taller_{{ taller.id }}">{{ taller.nombre }}</label>
-                  </div>
-                {% endfor %}
-
-                <!-- Filtro por tipo de equipo -->
-                <h5 class="mt-3">Filtrar por Tipo de Equipo:</h5>
-                {% for tipo in tipos %}
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="tipo" value="{{ tipo.id }}" id="tipo_{{ tipo.id }}" {% if tipo.id in tipos_seleccionados %}checked{% endif %}>
-                    <label class="form-check-label" for="tipo_{{ tipo.id }}">{{ tipo.nombre }}</label>
-                  </div>
-                {% endfor %}
-
-                <button type="submit" class="btn btn-primary mt-3 d-flex align-items-center">
-                  Aplicar Filtro
-                  <i class="bi bi-check ms-2"></i> <!-- Ícono de confirmación (Bootstrap 5) -->
-                </button>
-              </form>
-              <button id="closeFiltersBtn" class="btn btn-danger mt-3 d-flex align-items-center">
-                Cerrar
-                <i class="bi bi-x-circle ms-2"></i> <!-- Ícono de cerrar (Bootstrap 5) -->
-              </button>
-            </div>
-
-            <div class="table">
-              <table class="tb table">
-                <thead class="the table-primary">
-                  <tr class="tr">
-                    <th scope="col" class="th">ID</th>
-                    <th scope="col" class="th">Nombre</th>
-                    <th scope="col" class="th">Estado de Registro</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for maestro in maestros %}
-                    <tr class="tr clickable-row" data-url="{% url 'detalle' maestro.id %}">
-                      <td data-titulo="id" class="td">{{ maestro.id }}</td>
-                      <td data-titulo="nombre" class="td">{{ maestro.nombre }}</td>
-                      <td data-titulo="estado" class="td">{{ maestro.estado_registro }}</td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
+            {% include 'maestro/filtros.html' %}
+            {% include 'maestro/table.html' %}
           </div>
         </div>
       </div>
