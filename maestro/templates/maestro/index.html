@@ -31,25 +31,25 @@
             <tr class="tr">
               <th scope="col" class="th" data-titulo="id">ID</th>
               <th scope="col" class="th" data-titulo="nombre">Nombre</th>
-              <th scope="col" class="th" data-titulo="taller">Taller de Mantenimiento</th>
+              {% comment %} <th scope="col" class="th" data-titulo="taller">Taller de Mantenimiento</th>
               <th scope="col" class="th" data-titulo="tipo">Tipo de Equipo</th>
-              <th scope="col" class="th" data-titulo="ubicacion">Ubicación</th>
+              <th scope="col" class="th" data-titulo="ubicacion">Ubicación</th> {% endcomment %}
               <th scope="col" class="th" data-titulo="estado">Estado de Registro</th>
-              <th scope="col" class="th" data-titulo="acciones">Acciones</th>
+              {% comment %} <th scope="col" class="th" data-titulo="acciones">Acciones</th> {% endcomment %}
             </tr>
           </thead>
           <tbody>
             {% for maestro in maestros %}
-              <tr class="tr">
+              <tr class="tr clickable-row" data-url="{% url 'detalle' maestro.id %}">
                 <td class="td" data-titulo="id">{{ maestro.id }}</td>
                 <td class="td" data-titulo="nombre">{{ maestro.nombre }}</td>
-                <td class="td" data-titulo="taller">{{ maestro.taller_mantenimiento.nombre }}</td>
+                {% comment %} <td class="td" data-titulo="taller">{{ maestro.taller_mantenimiento.nombre }}</td>
                 <td class="td" data-titulo="tipo">{{ maestro.tipo_equipo.nombre }}</td>
-                <td class="td" data-titulo="ubicacion">{{ maestro.ubicacion }}</td>
+                <td class="td" data-titulo="ubicacion">{{ maestro.ubicacion }}</td> {% endcomment %}
                 <td class="td" data-titulo="estado">{{ maestro.estado_registro }}</td>
-                <td class="td" data-titulo="acciones">
+                {% comment %} <td class="td" data-titulo="acciones">
                   <a name="" id="" class="btn btn-secondary" href="{% url 'detalle' maestro.id %}" role="button">Ver Detalle</a>
-                </td>
+                </td> {% endcomment %}
               </tr>
             {% endfor %}
           </tbody>

@@ -1,3 +1,13 @@
+/* Efectos generales para todas las pantallas */
+.clickable-row:hover {
+    background-color: red;
+    cursor: pointer;
+}
+
+.clickable-row:active {
+    background-color: red;
+}
+
 @media (max-width: 30em) {
     .tb {
         width: 100%;
@@ -38,36 +48,24 @@
         display: none;
     }
 
-    /* Ocultar la columna 'Acciones' en pantallas pequeñas */
-    @media (max-width: 30em) {
-        .tb td[data-titulo="acciones"]::before {
-            display: none;
-            /* No mostrar la palabra "Acciones" en dispositivos pequeños */
-        }
+    .tb td[data-titulo="acciones"]::before {
+        display: none;
+    }
 
-        .tb .th[data-titulo="acciones"] {
-            display: none;
-            /* Ocultar el encabezado 'Acciones' */
-        }
+    .tb .th[data-titulo="acciones"] {
+        display: none;
+    }
 
-        /* Mejoras para las acciones en móviles */
-        .tb .td[data-titulo="acciones"] {
-            display: flex;
-            flex-direction: column;
-            /* Apilar las acciones */
-            align-items: flex-start;
-            /* Alinear las acciones al principio */
-        }
+    .tb .td[data-titulo="acciones"] {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-        .tb .td[data-titulo="acciones"] a {
-            margin-bottom: 5px;
-            /* Separar las acciones */
-            width: 100%;
-            /* Hacer que los botones ocupen el ancho completo */
-            text-align: center;
-            /* Centrar el texto de los botones */
-            margin-top: 10px;
-            /* Espacio antes de los botones */
-        }
+    .tb .td[data-titulo="acciones"] a {
+        margin-bottom: 5px;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
     }
 }
