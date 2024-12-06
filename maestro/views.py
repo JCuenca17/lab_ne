@@ -132,7 +132,10 @@ def crear(request, modelo):
         # Asegúrate que 'url' esté correctamente asignada
         return redirect(modelo_config['url'])
 
-    return render(request, 'crear.html', {'formulario': formulario})
+    return render(request, 'crear.html', {
+        'formulario': formulario,
+        'modelo_nombre': modelo,
+    })
 
 
 @login_required(login_url='login')
