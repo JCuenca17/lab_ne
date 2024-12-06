@@ -34,7 +34,7 @@
 }
 
 
-/* Estilos para el panel de filtros que se abre desde la derecha */
+/*  Estilos para el panel de filtros que se abre desde la derecha */
 .filters-panel {
     position: fixed;
     top: 0;
@@ -46,7 +46,6 @@
     padding: 20px;
     transition: right 0.3s ease-in-out;
     z-index: 1000;
-    /* Asegúrate de que se superponga sobre el contenido */
 }
 
 /* Panel de filtros visible */
@@ -80,11 +79,27 @@ form {
     /* Alinea el formulario de búsqueda a la derecha */
 }
 
+/* Botón de cerrar minimalista en la esquina superior derecha */
 #closeFiltersBtn {
     position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    /* Asegura que sea visible */
+    cursor: pointer;
+    z-index: 1001;
+    /* Asegura que esté por encima del contenido del filtro */
+    line-height: 1;
+    /* Para centrar mejor el símbolo */
+}
+
+#closeFiltersBtn:hover {
+    color: lightgray;
+    /* Cambia a rojo al pasar el mouse (opcional) */
 }
 
 .clickable-row .td {
