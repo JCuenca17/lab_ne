@@ -6,9 +6,16 @@
 
 {% block content %}
   <div class="card">
-    <div class="card-header">Editar</div>
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span class="h3 mb-0">Editar</span> <!-- Título Editar más grande -->
+      <!-- Botón Cancelar -->
+      <a href="{% url modelo_nombre %}" class="btn btn-primary d-flex align-items-center" role="button">
+        <i class="bi bi-x-circle me-2"></i>
+        Cancelar
+      </a>
+    </div>
     <div class="card-body">
-      <h4 class="card-title">Datos de {{ objeto.nombre }}</h4>
+      <h5 class="card-title">{{ objeto.nombre }}</h5>
       <form method="post">
         {% csrf_token %}
         {{ formulario.as_p }}
@@ -18,11 +25,6 @@
             <i class="bi bi-save me-2"></i>
             Guardar
           </button>
-          <!-- Botón Cancelar -->
-          <a name="" id="" class="btn btn-primary me-2 d-flex align-items-center" href="{% url modelo_nombre %}" role="button">
-            <i class="bi bi-x-circle me-2"></i>
-            Cancelar
-          </a>
           <!-- Botón Activar/Desactivar dinámico -->
           {% if objeto and objeto.estado_registro == 'A' %}
             <a href="{% url 'desactivar' modelo_nombre objeto.id %}" class="btn btn-warning d-flex align-items-center">

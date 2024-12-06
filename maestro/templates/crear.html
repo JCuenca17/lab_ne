@@ -6,7 +6,9 @@
 
 {% block content %}
   <div class="card">
-    <div class="card-header">Agregar</div>
+    <div class="card-header">
+      <span class="h3 mb-0">Agregar</span> <!-- Título Editar más grande -->
+    </div>
     <div class="card-body">
       <form method="post">
         {% csrf_token %}
