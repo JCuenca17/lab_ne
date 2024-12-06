@@ -15,24 +15,24 @@
         <div class="d-flex justify-content-center mt-3">
           <!-- Botón Guardar -->
           <button class="btn btn-success me-2 d-flex align-items-center" type="submit">
+            <i class="bi bi-save me-2"></i>
             Guardar
-            <i class="bi bi-save ms-2"></i>
           </button>
           <!-- Botón Cancelar -->
           <a name="" id="" class="btn btn-primary me-2 d-flex align-items-center" href="{% url modelo_nombre %}" role="button">
+            <i class="bi bi-x-circle me-2"></i>
             Cancelar
-            <i class="bi bi-x-circle ms-2"></i>
           </a>
           <!-- Botón Activar/Desactivar dinámico -->
           {% if objeto and objeto.estado_registro == 'A' %}
             <a href="{% url 'desactivar' modelo_nombre objeto.id %}" class="btn btn-warning d-flex align-items-center">
+              <i class="bi bi-toggle-off me-2"></i>
               Desactivar
-              <i class="bi bi-toggle-off ms-2"></i>
             </a>
           {% elif objeto and objeto.estado_registro == 'I' %}
             <a href="{% url 'activar' modelo_nombre objeto.id %}" class="btn btn-success d-flex align-items-center">
+              <i class="bi bi-toggle-on me-2"></i>
               Activar
-              <i class="bi bi-toggle-on ms-2"></i>
             </a>
           {% endif %}
         </div>
