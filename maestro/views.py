@@ -104,7 +104,8 @@ def listar(request, modelo):
     # Obtener los modelos relacionados (como Talleres, Tipos)
     modelos_relacionados = {}
     for filtro, related_model in modelo_config['related_models'].items():
-        modelos_relacionados[filtro] = related_model.objects.all()
+        modelos_relacionados[filtro] = related_model.objects.filter(
+            estado_registro='A')  # Solo activos
 
     # Renderizar la plantilla con los objetos obtenidos
     return render(request, modelo_config['template'], {

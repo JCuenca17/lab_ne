@@ -34,7 +34,7 @@
 }
 
 
-/* Estilos para el panel de filtros que se abre desde la derecha */
+/*  Estilos para el panel de filtros que se abre desde la derecha */
 .filters-panel {
     position: fixed;
     top: 0;
@@ -46,7 +46,28 @@
     padding: 20px;
     transition: right 0.3s ease-in-out;
     z-index: 1000;
-    /* Asegúrate de que se superponga sobre el contenido */
+}
+
+.filters-panel form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    padding-bottom: 60px;
+}
+
+.filters-panel .btn-primary {
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    right: 10px;
+    width: calc(100% - 20px);
+    max-width: 280px;
+    z-index: 1001;
+}
+
+.filters-panel #closeFiltersBtn {
+    z-index: 1002;
 }
 
 /* Panel de filtros visible */
@@ -77,14 +98,42 @@ form {
 .d-flex.justify-content-end {
     display: flex;
     justify-content: flex-end;
-    /* Alinea el formulario de búsqueda a la derecha */
 }
 
+#applyFiltersBtn {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#applyFiltersBtn:hover {
+    background-color: black;
+    color: white;
+}
+
+/* Botón de cerrar minimalista en la esquina superior derecha */
 #closeFiltersBtn {
     position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    /* Asegura que sea visible */
+    cursor: pointer;
+    z-index: 1001;
+    /* Asegura que esté por encima del contenido del filtro */
+    line-height: 1;
+    /* Para centrar mejor el símbolo */
+}
+
+#closeFiltersBtn:hover {
+    color: lightgray;
+    /* Cambia a rojo al pasar el mouse (opcional) */
 }
 
 .clickable-row .td {

@@ -15,6 +15,15 @@ class MaestroForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
 
+        # Filtrar los datos relacionados para incluir solo activos
+        if 'taller_mantenimiento' in self.fields:
+            self.fields['taller_mantenimiento'].queryset = TallerMantenimiento.objects.filter(
+                estado_registro='A')
+
+        if 'tipo_equipo' in self.fields:
+            self.fields['tipo_equipo'].queryset = TipoEquipo.objects.filter(
+                estado_registro='A')
+
         # Eliminar 'estado_registro' del formulario
         if 'estado_registro' in self.fields:
             del self.fields['estado_registro']
