@@ -129,6 +129,7 @@ def crear(request, modelo):
 
     if formulario.is_valid():
         formulario.save()
+        # Asegúrate que 'url' esté correctamente asignada
         return redirect(modelo_config['url'])
 
     return render(request, 'crear.html', {'formulario': formulario})
@@ -168,28 +169,75 @@ def editar(request, modelo, id):
 
 
 @login_required(login_url='login')
-def eliminar(request, id):
-    maestros = MaestroEquipo.objects.get(id=id)
-    # maestros.delete()
-    maestros.estado_registro = '*'
-    maestros.save()
-    return redirect('maestro')
+def eliminar(request, modelo, id):
+    # Obtener la configuración del modelo
+    modelo_config = MODELOS.get(modelo)
+    if not modelo_config:
+        return render(request, 'error.html', {'message': 'Modelo no encontrado'})
+
+    # Obtener el modelo correspondiente
+    model_class = modelo_config['model']
+
+    # Intentar obtener el objeto a eliminar
+    try:
+        objeto = model_class.objects.get(id=id)
+    except model_class.DoesNotExist:
+        return render(request, 'error.html', {'message': 'Objeto no encontrado'})
+
+    # Marcar como eliminado (por ejemplo, cambiando el estado a '*')
+    objeto.estado_registro = '*'  # Asegúrate de que todos los modelos tengan este campo
+    objeto.save()
+
+    # Redirigir al listado correspondiente
+    return redirect(modelo_config['url'])
 
 
 @login_required(login_url='login')
-def activar(request, id):
-    maestro = MaestroEquipo.objects.get(id=id)
-    maestro.estado_registro = 'A'  # Cambiar a activo
-    maestro.save()
-    return redirect('maestro')
+def activar(request, modelo, id):
+    # Obtener la configuración del modelo
+    modelo_config = MODELOS.get(modelo)
+    if not modelo_config:
+        return render(request, 'error.html', {'message': 'Modelo no encontrado'})
+
+    # Obtener el modelo correspondiente
+    model_class = modelo_config['model']
+
+    # Intentar obtener el objeto
+    try:
+        objeto = model_class.objects.get(id=id)
+    except model_class.DoesNotExist:
+        return render(request, 'error.html', {'message': 'Objeto no encontrado'})
+
+    # Cambiar el estado a activo
+    objeto.estado_registro = 'A'
+    objeto.save()
+
+    # Redirigir al listado correspondiente
+    return redirect(modelo_config['url'])
 
 
 @login_required(login_url='login')
-def desactivar(request, id):
-    maestro = MaestroEquipo.objects.get(id=id)
-    maestro.estado_registro = 'I'  # Cambiar a inactivo
-    maestro.save()
-    return redirect('maestro')
+def desactivar(request, modelo, id):
+    # Obtener la configuración del modelo
+    modelo_config = MODELOS.get(modelo)
+    if not modelo_config:
+        return render(request, 'error.html', {'message': 'Modelo no encontrado'})
+
+    # Obtener el modelo correspondiente
+    model_class = modelo_config['model']
+
+    # Intentar obtener el objeto
+    try:
+        objeto = model_class.objects.get(id=id)
+    except model_class.DoesNotExist:
+        return render(request, 'error.html', {'message': 'Objeto no encontrado'})
+
+    # Cambiar el estado a inactivo
+    objeto.estado_registro = 'I'
+    objeto.save()
+
+    # Redirigir al listado correspondiente
+    return redirect(modelo_config['url'])
 
 
 @login_required(login_url='login')

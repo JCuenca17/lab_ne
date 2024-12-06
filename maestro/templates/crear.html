@@ -1,17 +1,30 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
-{% block titulo %}Añadir {% endblock %}
+{% block titulo %}
+  Añadir
+{% endblock %}
 
-{% block content %} 
-
-    <div class="card">
-        <div class="card-header">Agregar</div>
-        <div class="card-body">
-            {% include "form.html" %}
-
+{% block content %}
+  <div class="card">
+    <div class="card-header">Agregar</div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        {{ formulario.as_p }}
+        <div class="d-flex justify-content-center mt-3">
+          <!-- Botón Guardar -->
+          <button class="btn btn-success me-2 d-flex align-items-center" type="submit">
+            Guardar
+            <i class="bi bi-save ms-2"></i>
+          </button>
+          <!-- Botón Cancelar -->
+          <a name="" id="" class="btn btn-primary me-2 d-flex align-items-center" href="{% url 'tablas' %}" role="button">
+            Cancelar
+            <i class="bi bi-x-circle ms-2"></i>
+          </a>
         </div>
-        <div class="card-footer text-muted"></div>
+      </form>
     </div>
-    
-
+    <div class="card-footer text-muted"></div>
+  </div>
 {% endblock %}
