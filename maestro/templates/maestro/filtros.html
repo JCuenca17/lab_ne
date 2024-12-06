@@ -1,43 +1,43 @@
-<!-- maestro/filtros.html -->
 <div id="filtersPanel" class="filters-panel">
-    <form method="get" action="" class="d-flex flex-column p-3">
-      <h5>Filtrar por estado:</h5>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="filtro" value="activos" id="activo" {% if 'activos' in filtro %}checked{% endif %}>
-        <label class="form-check-label" for="activo">Activados</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="filtro" value="inactivos" id="inactivo" {% if 'inactivos' in filtro %}checked{% endif %}>
-        <label class="form-check-label" for="inactivo">Desactivados</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="filtro" value="eliminados" id="eliminado" {% if 'eliminados' in filtro %}checked{% endif %}>
-        <label class="form-check-label" for="eliminado">Eliminados</label>
-      </div>
-  
-      <h5 class="mt-3">Filtrar por Taller de Mantenimiento:</h5>
-      {% if modelos_relacionados.taller %}
-          {% for taller in modelos_relacionados.taller %}
-              <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="taller" value="{{ taller.id }}" id="taller_{{ taller.id }}" {% if taller.id in filtro_seleccionado.taller %}checked{% endif %}>
-                  <label class="form-check-label" for="taller_{{ taller.id }}">{{ taller.nombre }}</label>
-              </div>
-          {% endfor %}
-      {% endif %}
-      
-      <h5 class="mt-3">Filtrar por Tipo de Equipo:</h5>
-      {% if modelos_relacionados.tipo %}
-          {% for tipo in modelos_relacionados.tipo %}
-              <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="tipo" value="{{ tipo.id }}" id="tipo_{{ tipo.id }}" {% if tipo.id in filtro_seleccionado.tipo %}checked{% endif %}>
-                  <label class="form-check-label" for="tipo_{{ tipo.id }}">{{ tipo.nombre }}</label>
-              </div>
-          {% endfor %}
-      {% endif %}
-      <button type="submit" class="btn btn-primary mt-3" id="applyFiltersBtn">
-        Aplicar Filtro
-    </button>
-    </form>
-    <button id="closeFiltersBtn" aria-label="Cerrar">×</button>
-  </div>
-  
+  <form method="get" action="" class="d-flex flex-column p-3 h-100">
+    <h5>Filtrar por estado:</h5>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="filtro" value="activos" id="activo" {% if 'activos' in filtro %}checked{% endif %}>
+      <label class="form-check-label" for="activo">Activados</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="filtro" value="inactivos" id="inactivo" {% if 'inactivos' in filtro %}checked{% endif %}>
+      <label class="form-check-label" for="inactivo">Desactivados</label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="filtro" value="eliminados" id="eliminado" {% if 'eliminados' in filtro %}checked{% endif %}>
+      <label class="form-check-label" for="eliminado">Eliminados</label>
+    </div>
+
+    <h5 class="mt-3">Filtrar por Taller de Mantenimiento:</h5>
+    {% if modelos_relacionados.taller %}
+        {% for taller in modelos_relacionados.taller %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="taller" value="{{ taller.id }}" id="taller_{{ taller.id }}" {% if taller.id in filtro_seleccionado.taller %}checked{% endif %}>
+                <label class="form-check-label" for="taller_{{ taller.id }}">{{ taller.nombre }}</label>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <h5 class="mt-3">Filtrar por Tipo de Equipo:</h5>
+    {% if modelos_relacionados.tipo %}
+        {% for tipo in modelos_relacionados.tipo %}
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo" value="{{ tipo.id }}" id="tipo_{{ tipo.id }}" {% if tipo.id in filtro_seleccionado.tipo %}checked{% endif %}>
+                <label class="form-check-label" for="tipo_{{ tipo.id }}">{{ tipo.nombre }}</label>
+            </div>
+        {% endfor %}
+    {% endif %}
+    
+    <!-- Botón Aplicar Filtros -->
+    <div class="mt-auto">
+      <button type="submit" class="btn btn-primary w-100" id="applyFiltersBtn">Aplicar Filtro</button>
+    </div>
+  </form>
+  <button id="closeFiltersBtn" aria-label="Cerrar">×</button>
+</div>
