@@ -16,13 +16,20 @@
 
     <div class="card-body">
       <ul class="list-group mb-3">
-        {% for campo, valor in campos_objeto.items %}
+        {% comment %} {% for campo, valor in campos_objeto.items %}
           <li class="list-group-item">
             <strong>{{ campo|capfirst }}:</strong> {{ valor }}
           </li>
+        {% endfor %} {% endcomment %}
+        {% for campo, valor in campos_objeto.items %}
+          {% if campo != 'equipos' %}
+            <li class="list-group-item">
+              <strong>{{ campo|capfirst }}:</strong> {{ valor }}
+            </li>
+          {% endif %}
         {% endfor %}
 
-        {% if objeto.estado_registro %}
+        {% comment %} {% if objeto.estado_registro %}
           <li class="list-group-item">
             <strong>Estado:</strong>
             {% if objeto.estado_registro == 'A' %}
@@ -34,7 +41,7 @@
             {% endif %}
           </li>
         {% endif %}
-      </ul>
+      </ul> {% endcomment %}
 
       <!-- Botones centrados -->
       <div class="d-flex justify-content-center mt-3">
