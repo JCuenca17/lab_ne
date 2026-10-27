@@ -38,3 +38,5 @@ python manage.py runserver
 ```
 
 Después se entra en `http://127.0.0.1:8000/` con el usuario creado.
+
+© 2024 José Luis Cuenca Gutiérrez. Todos los derechos reservados.
